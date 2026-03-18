@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QUESTiFY</title>
+  <!-- <link rel="stylesheet" href="/css/styles.css"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Favicon for most browsers -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+<!-- Favicon for modern browsers (optional) -->
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+
+<!-- Apple Touch Icon (for iOS devices) -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-icon-180x180.png">
+
+<!-- Web Manifest (optional) -->
+<link rel="manifest" href="/assets/manifest.json">
+
+
+<!-- ye style tag hai isi me design wala kaam hoga  -->
+<style>
+
+  /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7fafc;
+    color: #2d3748;
+    line-height: 1.6;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Navbar Styles */
+.navbar {
+    background: #2d3748;
+    color: white;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.5rem;
+  }
+  
+  /* Nav Links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #4299e1;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #4299e1;
+  }
+  
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+  
+  /* Buttons in Navbar */
+  .nav-links button {
+    background-color: #4299e1;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-links button:hover {
+    background-color: #3182ce;
+  }
+  
+  /* Hamburger Menu (Mobile) */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+  
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+  
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #2d3748;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+  
+    .nav-links.active {
+      max-height: 300px; /* Adjust based on content */
+    }
+  
+    .nav-links li {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .nav-links a,
+    .nav-links button {
+      padding: 1rem;
+      width: 100%;
+      display: block;
+    }
+  }
+  
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+  
+  /* Form Styles */
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #4299e1;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #3182ce;
+  }
+
+  /* Hero Section */
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #4a5568, #2d3748);
+    color: white;
+  }
+  
+  .hero-content {
+    max-width: 600px;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  
+  .cta-button {
+    background-color: #4299e1;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #3182ce;
+  }
+  
+  .hero-image img {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Features Section */
+  .features {
+    padding: 4rem 0;
+    background: white;
+  }
+  
+  .features h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .feature-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f7fafc;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-item i {
+    font-size: 2rem;
+    color: #4299e1;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-item p {
+    font-size: 1rem;
+    color: #4a5568;
+  }
+  
+  /* Input Section */
+.input-section {
+    padding: 4rem 0;
+    background: #aebac4;
+  }
+  
+  .input-section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #2d3748;
+  }
+  
+  /* Form Group Styling */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+  }
+  
+  /* Textarea Styling */
+  textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #2d3748;
+    background: white;
+    resize: vertical;
+    min-height: 150px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  textarea:focus {
+    border-color: #4299e1;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  }
+  
+  /* Input and Select Styling */
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #2d3748;
+    background: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  input[type="number"]:focus,
+  select:focus {
+    border-color: #4299e1;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  }
+  
+  /* Button Styling */
+  button {
+    width: 100%;
+    background-color: #4299e1;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #3182ce;
+    transform: translateY(-2px);
+  }
+  
+  button:active {
+    transform: translateY(0);
+  }
+
+
+  /* MCQ Display Section */
+  .mcq-section {
+    padding: 4rem 0;
+    background: white;
+  }
+  
+  .mcq-section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .mcq-list {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  .mcq-item {
+    background: #f7fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .mcq-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mcq-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mcq-item ul {
+    list-style: none;
+    margin-bottom: 1rem;
+  }
+  
+  .mcq-item li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .mcq-item li:last-child {
+    border-bottom: none;
+  }
+  
+  .correct-answer {
+    color: #38a169;
+    font-weight: 500;
+  }
+  
+  /* About Section */
+  .about {
+    padding: 4rem 0;
+    background: #f7fafc;
+  }
+  
+  .about h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .about p {
+    font-size: 1rem;
+    color: #4a5568;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+
+
+/* How It Works Section */
+.how-it-works {
+  padding: 4rem 0;
+  background: #f7fafc;
+}
+
+.how-it-works h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.step {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-5px);
+}
+
+.step-number {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #4299e1;
+  color: white;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.step h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.step p {
+  font-size: 1rem;
+  color: #4a5568;
+}
+
+.step .visual img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* CTA Box */
+.cta-box {
+    background: #4299e1;
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .cta-box:hover {
+    transform: translateY(-5px);
+  }
+  
+  .cta-box h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cta-box p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cta-box .cta-button {
+    background: white;
+    color: #4299e1;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .cta-box .cta-button:hover {
+    background: #3182ce;
+    color: white;
+  }
+
+  
+  /* Testimonials Section */
+  .testimonials {
+    padding: 4rem 0;
+    background: white;
+  }
+  
+  .testimonials h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .testimonial-item {
+    background: #f7fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .testimonial-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial-item p {
+    font-size: 1rem;
+    color: #4a5568;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-item h3 {
+    font-size: 1.25rem;
+    color: #2d3748;
+  }
+  
+/* Contact Section */
+.contact {
+    padding: 4rem 0;
+    background: white;
+  }
+  
+  .contact h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .contact form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Move to Top Button */
+#moveToTopBtn {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4299e1;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  #moveToTopBtn:hover {
+    background-color: #3182ce;
+    transform: translateY(-2px);
+  }
+  
+  #moveToTopBtn:active {
+    transform: translateY(0);
+  }
+
+/* Footer Styles */
+.footer {
+    background: #2d3748;
+    color: white;
+    padding: 4rem 0 2rem;
+  }
+  
+  .footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .footer-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #4299e1;
+  }
+  
+  .footer-section p {
+    font-size: 0.9rem;
+    color: #cbd5e0;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-section ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-section ul li a {
+    color: #cbd5e0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-section ul li a:hover {
+    color: #4299e1;
+  }
+  
+  /* Newsletter Form */
+  #newsletterForm {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  #newsletterForm input {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  #newsletterForm button {
+    background-color: #4299e1;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #newsletterForm button:hover {
+    background-color: #3182ce;
+  }
+  
+  /* Social Media Links */
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .social-links a {
+    color: white;
+    font-size: 1.25rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .social-links a:hover {
+    color: #4299e1;
+    transform: translateY(-3px);
+  }
+  
+  /* Copyright */
+  .copyright {
+    text-align: center;
+    border-top: 1px solid #4a5568;
+    padding-top: 1rem;
+    font-size: 0.9rem;
+    color: #cbd5e0;
+  }
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<!-- Navbar upar wala ilaka -->
+<nav class="navbar">
+    <div class="container">
+      <!-- Logo -->
+      <a href="#" class="logo">
+        <img src="/assets/logo.png" alt="Logo"> <!-- Apna logo lgaalenge -->
+        <span>QUESTiFY</span>
+      </a>
+  
+      <!-- Hamburger Menu (for mobile) bakwaas-->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+  
+      <!-- Nav Links upar wale ke liye he hai-->
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <!-- <li><button id="openLoginModal">Login</button></li> //ye sab kaam future me hoga
+        <li><button id="openRegisterModal">Register</button></li> -->
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Login Modal
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Login</h2>
+      <form id="loginForm">
+        <div class="form-group">                    //future ka part hai
+          <label for="loginUsername">Username:</label>
+          <input type="text" id="loginUsername" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password:</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  Registration Modal
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Register</h2>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="registerUsername">Username:</label>       //future ka part hai part2
+          <input type="text" id="registerUsername" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password:</label>
+          <input type="password" id="registerPassword" required>
+        </div>
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div> -->
+
+  <!-- Hero Section  ek type se cover page-->
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Generate MCQs Effortlessly</h1>
+        <p>Create multiple-choice questions for aptitude and technical preparation with ease.</p>
+        <a href="#input-section" class="cta-button">Get Started</a>
+      </div>
+      <!-- <div class="hero-image">
+        <img src="/assets/" alt="MCQ Generator">      //image lgaani thi pr set ni ho rahi 
+      </div> -->
+    </div>
+  </section>
+
+  <!-- Features Section ye jo humne kuch bnaayi hai iske kuch faaltu features-->
+  <section id="features" class="features">
+    <div class="container">
+      <h2>Features</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <i class="fas fa-brain"></i>
+          <h3>AI-Powered</h3>
+          <p>Uses advanced AI to generate contextually accurate questions.</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-sliders-h"></i>
+          <h3>Customizable</h3>
+          <p>Choose topics, difficulty levels, and the number of questions.</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-chart-line"></i>
+          <h3>Performance Tracking</h3>
+          <p>Track your progress and improve over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Input Section yaha se shuru hoga asli khel (main part hai)-->
+  <section id="input-section" class="input-section">
+    <div class="container">
+      <h2>Generate MCQs</h2>
+      <form id="mcqForm">
+        <!-- Text Area for Input -->
+        <div class="form-group">
+          <label for="textInput">Enter Text:</label>
+          <textarea id="textInput" placeholder="Paste your content here..." required></textarea>
+        </div>
+  
+        <!-- Dropdown for Distractor Method jo model use karna hai wo choose karo -->
+        <div class="form-group">
+          <label for="methodSelect">Distractor Method:</label>
+          <select id="methodSelect">
+            <option value="Wordnet">WordNet</option>
+            <option value="Sense2Vec">Sense2Vec</option>
+          </select>
+        </div>
+  
+        <!-- Input for Number of Questions
+        <div class="form-group">              //future part3
+          <label for="numQuestions">Number of Questions:</label>
+          <input type="number" id="numQuestions" min="1" max="20" value="5" required>
+        </div>
+  
+        Dropdown for Difficulty Level
+        <div class="form-group">
+          <label for="difficultySelect">Difficulty Level:</label>
+          <select id="difficultySelect">
+            <option value="Easy">Easy</option>        //future part 4
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div> -->
+  
+        <!-- Submit Button ye dikhaayega asli khel -->
+        <button type="submit">Generate MCQs</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- MCQ Display Section ye bhi dikhaayega khel maut ka -->
+  <section class="mcq-section">
+    <div class="container">
+      <h2>Generated MCQs</h2>
+      <div id="mcqList" class="mcq-list"></div>
+    </div>
+  </section>
+
+  <!-- About Section ye bhi page bharne ke liye hai-->
+  <section id="about" class="about">
+    <div class="container">
+      <h2>QUESTiFY- Turn Learning into a Quest</h2>
+      <p>QUESTiFY is a powerful tool designed to help students and educators create customizable quizzes for aptitude and technical preparation. With AI-powered question generation and performance tracking, it provides a seamless learning experience.</p>
+    </div>
+  </section>
+
+<!-- How It Works Section steps me dikhaaya hai kaise kaam karta hai -->
+<section id="how-it-works" class="how-it-works">
+  <div class="container">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <!-- Step 1: Input Text -->
+      <div class="step">
+        <span class="step-number">1</span>
+        <h3>Input Text</h3>
+        <p>Paste your text or upload a document. The system processes the text to extract key concepts and sentences.</p>
+        <!-- <div class="visual">
+          <img src="images/input-text.png" alt="Input Text">
+        </div> -->
+      </div>
+
+      <!-- Step 2: Summarize Text -->
+      <div class="step">
+        <span class="step-number">2</span>
+        <h3>Summarize Text</h3>
+        <p>The text is summarized using a <strong>T5 Transformer model</strong> to focus on the most important information.</p>
+        <!-- <div class="visual">
+          <img src="images/summarize-text.png" alt="Summarize Text">  //nahi chala
+        </div> -->
+      </div>
+
+      <!-- Step 3: Extract Keywords -->
+      <div class="step">
+        <span class="step-number">3</span>
+        <h3>Extract Keywords</h3>
+        <p>Key phrases and nouns are extracted using <strong>MultipartiteRank</strong> and <strong>Spacy</strong> for question generation.</p>
+        <!-- <div class="visual">
+          <img src="images/extract-keywords.png" alt="Extract Keywords">   //nahi chala 
+        </div> -->
+      </div>
+
+      <!-- Step 4: Generate Questions -->
+      <div class="step">
+        <span class="step-number">4</span>
+        <h3>Generate Questions</h3>
+        <p>Questions are generated using a <strong>T5 SQuAD model</strong>, which creates contextually accurate MCQs.</p>
+        <!-- <div class="visual">
+          <img src="images/generate-questions.png" alt="Generate Questions">   //nahi chala 
+        </div> -->
+      </div>
+
+      <!-- Step 5: Create Distractors -->
+      <div class="step">
+        <span class="step-number">5</span>
+        <h3>Create Distractors</h3>
+        <p>Distractors (incorrect options) are generated using <strong>Sense2Vec</strong> and <strong>WordNet</strong> for plausible alternatives.</p>
+        <!-- <div class="visual">
+          <img src="images/create-distractors.png" alt="Create Distractors">    //nahi chala 
+        </div> -->
+      </div>
+
+      <!-- Step 6: Display MCQs -->
+      <div class="step">
+        <span class="step-number">6</span>
+        <h3>Display MCQs</h3>
+        <p>The final MCQs are displayed with options, correct answers, and explanations for effective learning.</p>
+        <!-- <div class="visual">
+          <img src="images/display-mcqs.png" alt="Display MCQs">
+        </div> -->
+      </div>
+
+      <!-- Try It Now Box wahi le jaayega generate section pe  -->
+      <div class="step cta-box">
+        <h3>Ready to Try It?</h3>
+        <p>Start generating MCQs now and experience the power of AI-driven question generation.</p>
+        <a href="#input-section" class="cta-button">Try It Now</a>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  <!-- Testimonials Section ye nakli hai naam change karna chahe to kar sakte hai -->
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <h2>What Our Users Say</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial-item">
+          <p>"This tool has revolutionized the way I prepare for exams. Highly recommended!"</p>
+          <h3>- Aman Kumar Singh</h3>
+        </div>
+        <div class="testimonial-item">
+          <p>"The AI-generated questions are incredibly accurate and relevant."</p>
+          <h3>- Adarsh Thakur</h3>
+        </div>
+        <div class="testimonial-item">
+          <p>"A must-have tool for anyone serious about learning."</p>
+          <h3>- Raghuvendra Pratap Singh</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Contact Section ye kisi tarah kaam kar raha hai -->
+<section id="contact" class="contact">
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+      <!-- Web3Forms Access Key -->
+      <input type="hidden" name="access_key" value="8ae84174-eba0-4629-8291-1ffd6882401f"> 
+
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <!-- Message Field -->
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+  
+
+  <!-- Move to Top Button -->
+<button id="moveToTopBtn" title="Go to top">↑</button>
+
+ <!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- About Section -->
+      <div class="footer-section">
+        <h3>QUESTiFY</h3>
+        <p>QUESTiFY is a powerful tool designed to help students and educators create customizable quizzes for aptitude and technical preparation.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter Section
+      <div class="footer-section">
+        <h3>Subscribe to Our Newsletter</h3>    //ye bhi nahi lgaana kisi kaam ka nahi hai 
+        <form id="newsletterForm">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p>Stay updated with the latest features and news.</p>
+      </div> -->
+
+      <!-- Social Media Section -->
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Copyright -->
+    <div class="copyright">
+      <p>&copy; 2025 QUESTiFY. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+  <!-- <script src="/js/script.js"></script> -->
+</body>
+
+<script>
+
+  // document.getElementById("mcqForm").addEventListener("submit", async (e) => {
+//     e.preventDefault();
+  
+//     const text = document.getElementById("textInput").value;
+//     const method = document.getElementById("methodSelect").value;
+//     const numQuestions = document.getElementById("numQuestions").value;
+//     const difficulty = document.getElementById("difficultySelect").value;
+  
+//     // Simulate API call (replace with actual fetch call to your backend)
+//     const mcqs = await generateMCQs(text, method, numQuestions, difficulty);
+  
+//     displayMCQs(mcqs);
+//   });
+
+//ye upar wala code purana hai use ni karna
+
+
+// document.getElementById("mcqForm").addEventListener("submit", async (e) => {
+//   e.preventDefault();
+
+//   const text = document.getElementById("textInput").value;
+//   const method = document.getElementById("methodSelect").value;
+
+//   try {
+//       const response = await fetch("http://127.0.0.1:5500/generate-mcq", {
+//           method: "POST",
+//           headers: { "Content-Type": "application/json" },
+//           body: JSON.stringify({ text: text, method: method }),
+//       });
+
+//       if (!response.ok) {
+//           throw new Error("Failed to fetch MCQs from backend.");
+//       }
+
+//       const mcqs = await response.json();
+//       displayMCQs(mcqs);
+//   } catch (error) {
+//       console.error("Error fetching MCQs:", error);
+//   }
+// });
+
+
+
+function displayMCQs(mcqs) {
+  const mcqList = document.getElementById("mcqList");
+  mcqList.innerHTML = "";
+
+  mcqs.forEach((mcq) => {
+      const mcqItem = document.createElement("div");
+      mcqItem.className = "mcq-item";
+
+      const question = document.createElement("h3");
+      question.textContent = mcq.question;
+      mcqItem.appendChild(question);
+
+      const optionsList = document.createElement("ul");
+      mcq.options.forEach((option) => {
+          const optionItem = document.createElement("li");
+          optionItem.textContent = option;
+          optionsList.appendChild(optionItem);
+      });
+      mcqItem.appendChild(optionsList);
+
+      const correctAnswer = document.createElement("p");
+      correctAnswer.className = "correct-answer";
+      correctAnswer.textContent = `Correct Answer: ${mcq.correctAnswer}`;
+      mcqItem.appendChild(correctAnswer);
+
+      mcqList.appendChild(mcqItem);
+  });
+}
+
+
+
+document.getElementById("mcqForm").addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  let context = document.getElementById("textInput").value;
+  let method = document.getElementById("methodSelect").value;
+  let mcqList = document.getElementById("mcqList");
+
+  if (context.trim() === "") {
+      alert("Please enter some text!");
+      return;
+  }
+
+  mcqList.innerHTML = "<p>Generating MCQs... Please wait.</p>";
+
+  try {
+      let response = await fetch("http://127.0.0.1:8000/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ context: context, method: method })
+      });
+
+      let data = await response.json();
+      mcqList.innerHTML = `<h3>Summarized Text:</h3><p>${data.summary}</p><hr>${data.mcq}`;
+  } catch (error) {
+      console.error("Error generating MCQs:", error);
+      mcqList.innerHTML = "<p style='color: red;'>Error generating MCQs. Please try again.</p>";
+  }
+});
+
+
+
+
+
+
+
+
+
+
+// Move to Top Button
+const moveToTopBtn = document.getElementById('moveToTopBtn');
+
+// Show the button when the user scrolls down 200px
+window.onscroll = function () {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    moveToTopBtn.style.display = 'block';
+  } else {
+    moveToTopBtn.style.display = 'none';
+  }
+};
+
+// Smooth scroll to top when the button is clicked
+moveToTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+  
+
+  // function generateMCQs(text, method, numQuestions, difficulty) {
+  //   // Simulate generated MCQs (replace with actual backend response)
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       const mcqs = [
+  //         {
+  //           question: "What is the capital of France?",
+  //           options: ["Paris", "London", "Berlin", "Madrid"],
+  //           correctAnswer: "Paris",
+  //         },
+  //         {
+  //           question: "Which planet is known as the Red Planet?",
+  //           options: ["Earth", "Mars", "Jupiter", "Saturn"],
+  //           correctAnswer: "Mars",
+  //         },
+  //       ];
+  //       resolve(mcqs);
+  //     }, 1000);
+  //   });
+  // }
+  
+  // function displayMCQs(mcqs) {
+  //   const mcqList = document.getElementById("mcqList");
+  //   mcqList.innerHTML = "";
+  
+  //   mcqs.forEach((mcq) => {
+  //     const mcqItem = document.createElement("div");
+  //     mcqItem.className = "mcq-item";
+  
+  //     const question = document.createElement("h3");
+  //     question.textContent = mcq.question;
+  //     mcqItem.appendChild(question);
+  
+  //     const optionsList = document.createElement("ul");
+  //     mcq.options.forEach((option) => {
+  //       const optionItem = document.createElement("li");
+  //       optionItem.textContent = option;
+  //       optionsList.appendChild(optionItem);
+  //     });
+  //     mcqItem.appendChild(optionsList);
+  
+  //     const correctAnswer = document.createElement("p");
+  //     correctAnswer.className = "correct-answer";
+  //     correctAnswer.textContent = `Correct Answer: ${mcq.correctAnswer}`;
+  //     mcqItem.appendChild(correctAnswer);
+  
+  //     mcqList.appendChild(mcqItem);
+  //   });
+
+
+  //   document.addEventListener('DOMContentLoaded', function() {
+  //     // Get the form element
+  //     const newsletterForm = document.getElementById('newsletterForm');
+      
+  //     // Add event listener for form submission
+  //     newsletterForm.addEventListener('submit', function(event) {
+  //       event.preventDefault(); // Prevent page reload on form submission
+        
+  //       // Get the email input value
+  //       const emailInput = newsletterForm.querySelector('input[type="email"]');
+  //       const email = emailInput.value.trim();
+    
+  //       if (email) {
+  //         // Simulate a successful subscription (you can replace this with actual backend logic)
+  //         alert('Thank you for subscribing with the email: ' + email);
+          
+  //         // Clear the email input after successful submission
+  //         emailInput.value = '';
+  //       } else {
+  //         // If email is empty, alert the user
+  //         alert('Please enter a valid email address.');
+  //       }
+  //     });
+  //   });      
+  // }
+</script>
+
+
+</html>
