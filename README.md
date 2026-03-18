@@ -1,0 +1,1 @@
+It is an AI-driven tool that summarizes text and generates topic-based MCQs using T5 Transformer. Features include automated question-answer generation, difficulty adaptation, answer explanations, keyword extraction, and performance tracking. Designed for offline use, benefiting students and educators in remote areas.
